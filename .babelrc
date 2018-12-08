@@ -1,0 +1,10 @@
+{
+  "passPerPreset": true,
+  "presets": [
+    "env"
+  ],
+  "plugins": [
+    "babel-plugin-inline-import",
+    "transform-runtime"
+  ]
+}
