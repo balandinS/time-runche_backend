@@ -26,11 +26,11 @@ const WatchSchema = mongoose.Schema({
 let WatchModel = mongoose.model('Watch', WatchSchema);
 //getallWatches
 WatchModel.getAll = () => {
-    return WatcheModel.find();
+    return WatchModel.find({});
 }
 //find watch with brand in data base
 WatchModel.getBrand = (param) => {
-    return WatcheModel.find({ brand: param });
+    return WatchModel.find({ brand: param });
 }
 
 export default WatchModel;

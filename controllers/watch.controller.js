@@ -5,22 +5,21 @@ const controller = {};
 
 controller.getAll = async (req, res) => {
     try {
-        const watch = await WatchModel.getAll();
-        //in case of rendering page with arguments
-         
+        const watches = await WatchModel.getAll();
+        return watches
     }
     catch(err) {
-        res.send('Got error in getAll');
+        res.send(err);
     }
 }
 
 controller.getBrand = async (req, res) => {
     try {
-        
-        const watch = await WatchModel.getBrand(req.query.brand);
 
-        //in case of rendering page with arguments
-        //res.render('/watches/:brand', {data: data});
+        const param = req.params.brand
+        console.log(param);
+        const watch = await WatchModel.getBrand(param);
+        return watch;
     }
     catch(err) {
         res.send('Got error in getAll');

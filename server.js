@@ -6,12 +6,10 @@ import config from './core/config/config.dev'
 import router from './routes/cars.route'
 import connectToDb from './db/connect'
 import path from 'path' 
-
 const port = config.serverPort;
 connectToDb();
 
 const app = express();
-
 //using static pages
 app.engine('html', require('ejs').renderFile);
 app.set('views', path.join(__dirname, 'views'));
