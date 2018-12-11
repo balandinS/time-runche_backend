@@ -22,55 +22,47 @@ router.get('/watches/:brand', (req,res) => {
     watchController.getBrand(req, res)
     .then(doc => {
        res.status(200).json(doc)
-       console.log(doc)
      })
     .catch(err => res.send(err))
 })
-router.get('/send', (req, res) => {
-    const outputData = `
-    <p>You have a new contact request</p>
-    <h3>Contact Details</h3>
-    <ul>  
-      <li>Name: ${req.body.name}</li>
-      <li>Email: ${req.body.email}</li>
-    </ul>
-    <h3>Message</h3>
-    <p>${req.body.message}</p>
-  `;
-
+router.post('/send', (req, res) => {
+        console.log(req.body)
+        // create reusable transporter object using the default SMTP transport
     let transporter = nodemailer.createTransport({
         host: 'smtp.gmail.com',
-        port: 465,
-        secure: false,
-        port: 25,
+        port: 587,
+        secure: false, // true for 465, false for other ports
         auth: {
-            user: 'time.runche1234@gmail.com',
-            pass: 'test1test'
+            user: 'time.runche1234@gmail.com', // generated ethereal user
+            pass: 'test1test' // generated ethereal password
         },
         tls: {
             rejectUnauthorized: false
         }
     });
 
-    let HelperOptions = {
-        from: 'seregey.balandin@gmail.com',
-        to: 'time.runche1234@gmail.com',
-        subject: 'Majeni Contact Request',
-        text: 'Hello',
-        html: outputData
+    // setup email data with unicode symbols
+    let mailOptions = {
+        from: '"From nodeMailer" <time.runche1234@gmail.com>', // sender address
+        to: 'time.runche1234@gmail.com', // list of receivers
+        subject: 'Hello ✔', // Subject line
+        text: 'Hello world?', // plain text body
+        html: '<b>Hello world?</b>' // html body
     };
 
-
-
-    transporter.sendMail(HelperOptions, (error, info) => {
+    // send mail with defined transport object
+    transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
             return console.log(error);
         }
-        console.log("The message was sent!");
-        console.log(info);
-    });
+        console.log('Message sent: %s', info.messageId);
+        // Preview only available when sending through an Ethereal account
+        console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
 
-});
+        // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
+        // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
+    });
+    });
 
 
 export default router;
