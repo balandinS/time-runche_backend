@@ -25,4 +25,23 @@ controller.getBrand = async (req, res) => {
         res.send('Got error in getAll');
     }
 }
+
+controller.getAccessories = async (req, res) => {
+    try{
+        console.log('LOG')
+         const watches = await WatchModel.getAccessories();
+         //console.log(watches);
+         return watches;
+    }
+   catch(error) { res.send('Got error in getAll');}
+}
+
+controller.getSecondhand = async (req, res) => {
+    try{
+         const watches = await WatchModel.getSecondhand();
+         return watches;
+    }
+   catch(error) { res.send('Got error in getAll');}
+}
+
 export default controller;

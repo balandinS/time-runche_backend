@@ -32,5 +32,12 @@ WatchModel.getAll = () => {
 WatchModel.getBrand = (param) => {
     return WatchModel.find({ brand: param });
 }
+WatchModel.getAccessories = () => {
+    console.log("HERE")
+    return WatchModel.find({ accessory: true })
+}
+WatchModel.watchSecondhand = () => {
+    return WatchModel.find({ secondhand: true })
+}
 
 export default WatchModel;

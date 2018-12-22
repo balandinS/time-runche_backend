@@ -25,6 +25,22 @@ router.get('/watches/:brand', (req,res) => {
      })
     .catch(err => res.send(err))
 })
+
+router.get('/watches/special/accessories',(req, res) => {
+   watchController.getAccessories()
+   .then(doc => {
+    res.status(200).json(doc)
+  })
+ .catch(err => res.send(err))
+})
+router.get('/watches/special/secondhand',(req, res) => {
+    watchController.getAccessories()
+    .then(doc => {
+     res.status(200).json(doc)
+   })
+  .catch(err => res.send(err))
+ })
+
 router.post('/send', (req, res) => {
         console.log(req.body)
         // create reusable transporter object using the default SMTP transport
@@ -33,8 +49,8 @@ router.post('/send', (req, res) => {
         port: 587,
         secure: false, // true for 465, false for other ports
         auth: {
-            user: 'time.runche1234@gmail.com', // generated ethereal user
-            pass: 'test1test' // generated ethereal password
+            user: 'seregey.balandin@gmail.com', // generated ethereal user
+            pass: '054211hjk' // generated ethereal password
         },
         tls: {
             rejectUnauthorized: false
@@ -43,7 +59,7 @@ router.post('/send', (req, res) => {
 
     // setup email data with unicode symbols
     let mailOptions = {
-        from: '"From nodeMailer" <time.runche1234@gmail.com>', // sender address
+        from: '"sergey balandin" <seregey.balandin@gmail.com>', // sender address
         to: 'time.runche1234@gmail.com', // list of receivers
         subject: 'Hello ✔', // Subject line
         text: 'Hello world?', // plain text body
