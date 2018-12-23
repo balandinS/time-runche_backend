@@ -1,23 +1,3 @@
-# express-es
-
-Starter project for creating a MVC express server, using
-
-+ express
-+ mongoose
-+ babel-cli
-+ winston and morgan for logging
-+ Async/Await
-
-## Installation
-
-Clone the repository 
-```
-git clone https://github.com/iedenis/express-es
-```
-and run 
-```
-npm install`
-```
 
 ## Starting the server
 
