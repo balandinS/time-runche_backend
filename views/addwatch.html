@@ -33,8 +33,10 @@
 
                     <label for="Gender">Gender</label>
                     <select name="gender" class="form-control form-control">
+                        <option>Unisex</option>
                         <option>Male</option>
                         <option>Female</option>
+
                     </select>
 
                     <label for="Condition">Condition</label>
@@ -43,19 +45,26 @@
                         <option>Used</option>
                     </select>
 
+                    <label for="Accessories">Accessories</label>
+                    <select name='accessories' class="form-control form-control">
+                        <option>True</option>
+                        <option>False</option>
+                    </select>
+
                     <input name='case_material' class="form-control" type="text" placeholder="Case material">
                     <input name='bracelet_material' class="form-control" type="text" placeholder="Bracelet meterial">
-                    <label for='caseDiameter'>Case diameter</label>
+                    <label for='case_diameter'>Case diameter</label>
                     <div class='diameter' style="border:1px solid; margin-left:10px;width: 400px">
-                        <input class="form-control" type="number" value="10" name="case_Width">
-                        <input class="form-control" type="number" value="10" name="case_Height">
-
+                        <input class="form-control" type="number" value="10" name="case_width">
+                        <input class="form-control" type="number" value="10" name="case_height">
                     </div>
+                    <label for="price" style="font-weight: bold">Price</label>
+                    <input class="form-control" type="number" value="100" name="price" style="text-align: center">
 
 
                     <div class="uploader" style="border:1px solid; margin-left: 10px; width: 400px">
                         <label for="imgUpload">Watch image</label>
-                        <input  type="file" name='imgUpload' class="form-control-file">
+                        <input type="file" name='imgUpload' class="form-control-file">
                     </div>
                     <input class="btn btn-primary" type="submit" value="Submit" style="margin:10px">
 

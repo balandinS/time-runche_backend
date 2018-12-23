@@ -5,16 +5,25 @@ import multer from 'multer'
 const nodemailer = require('nodemailer');
 const router = express.Router();
 
-const upload = multer({  dest: 'images/' })
+const storage = multer.diskStorage({
+    destination: function(req, file, cb){
+        cb(null, "./images/")
+    },
+    filename: function(req, file, cb){
+        cb(null, new Date().toISOString()+file.originalname);
+    }
+})
+const upload = multer({ storage: storage})
+
+
 
 router.get('/addwatch', (req, res) => {
     res.render('../views/addwatch');
 })
 
 router.post('/addwatch', upload.single('imgUpload'), (req, res) => {
-    console.log(req.file);
     //console.log(req.body);
-
+watchController.saveWatch(req, res);
     res.render('../views/addwatch.html')
 })
 
