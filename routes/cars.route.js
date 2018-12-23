@@ -1,49 +1,60 @@
 import express from "express";
 import watchController from "../controllers/watch.controller"
-const nodemailer = require('nodemailer');
-const router = express.Router()
+import multer from 'multer'
 
-router.get('/', (req, res)=>{
-    console.log('index');
+const nodemailer = require('nodemailer');
+const router = express.Router();
+
+const upload = multer({  dest: 'images/' })
+
+router.get('/addwatch', (req, res) => {
+    res.render('../views/addwatch');
+})
+
+router.post('/addwatch', upload.single('imgUpload'), (req, res) => {
+    console.log(req.file);
+    //console.log(req.body);
+
+    res.render('../views/addwatch.html')
 })
 
 //pointer to async function. In case of rendering,
 //you have to add a path to the controller function (getAll)
-router.get('/watches', (req,res) => {
- watchController.getAll()
- .then(doc => { 
-     res.status(200).json(doc)
-    })
- .catch(err => console.log('500: error server :(( '))
+router.get('/watches', (req, res) => {
+    watchController.getAll()
+        .then(doc => {
+            res.status(200).json(doc)
+        })
+        .catch(err => console.log('500: error server :(( '))
 });
 
-router.get('/watches/:brand', (req,res) => {
+router.get('/watches/:brand', (req, res) => {
     console.log(req.params.brand)
     watchController.getBrand(req, res)
-    .then(doc => {
-       res.status(200).json(doc)
-     })
-    .catch(err => res.send(err))
+        .then(doc => {
+            res.status(200).json(doc)
+        })
+        .catch(err => res.send(err))
 })
 
-router.get('/watches/special/accessories',(req, res) => {
-   watchController.getAccessories()
-   .then(doc => {
-    res.status(200).json(doc)
-  })
- .catch(err => res.send(err))
-})
-router.get('/watches/special/secondhand',(req, res) => {
+router.get('/watches/special/accessories', (req, res) => {
     watchController.getAccessories()
-    .then(doc => {
-     res.status(200).json(doc)
-   })
-  .catch(err => res.send(err))
- })
+        .then(doc => {
+            res.status(200).json(doc)
+        })
+        .catch(err => res.send(err))
+})
+router.get('/watches/special/secondhand', (req, res) => {
+    watchController.getAccessories()
+        .then(doc => {
+            res.status(200).json(doc)
+        })
+        .catch(err => res.send(err))
+})
 
 router.post('/send', (req, res) => {
-        console.log(req.body)
-        // create reusable transporter object using the default SMTP transport
+    console.log(req.body)
+    // create reusable transporter object using the default SMTP transport
     let transporter = nodemailer.createTransport({
         host: 'smtp.gmail.com',
         port: 587,
@@ -78,7 +89,7 @@ router.post('/send', (req, res) => {
         // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
         // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
     });
-    });
+});
 
 
 export default router;

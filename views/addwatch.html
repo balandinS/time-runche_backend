@@ -1,0 +1,72 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <style>
+
+        .form-control {
+            margin: 5px 0px 5px 10px;
+            width: 380px
+    }
+    label {
+        display: block;
+        text-align: center
+    }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <h1>Add a new watch</h1>
+        </div>
+        <div class="row" style="border: 1px solid">
+            <br>
+            <form action='/addwatch' method="POST" enctype="multipart/form-data">
+                <div class="form-group" style="width: 400px">
+                    <br>
+                    <input name='brand' class="form-control" type="text" placeholder="Brand">
+                    <input name='year' class="form-control" type="number" value="1900" id="case_Height">
+
+                    <h3 style="text-align: center"> Model </h3>
+                    <input name="modelName" class="form-control" type="text" placeholder="Model name">
+
+                    <label for="Gender">Gender</label>
+                    <select name="gender" class="form-control form-control">
+                        <option>Male</option>
+                        <option>Female</option>
+                    </select>
+
+                    <label for="Condition">Condition</label>
+                    <select name='condition' class="form-control form-control">
+                        <option>New</option>
+                        <option>Used</option>
+                    </select>
+
+                    <input name='case_material' class="form-control" type="text" placeholder="Case material">
+                    <input name='bracelet_material' class="form-control" type="text" placeholder="Bracelet meterial">
+                    <label for='caseDiameter'>Case diameter</label>
+                    <div class='diameter' style="border:1px solid; margin-left:10px;width: 400px">
+                        <input class="form-control" type="number" value="10" name="case_Width">
+                        <input class="form-control" type="number" value="10" name="case_Height">
+
+                    </div>
+
+
+                    <div class="uploader" style="border:1px solid; margin-left: 10px; width: 400px">
+                        <label for="imgUpload">Watch image</label>
+                        <input  type="file" name='imgUpload' class="form-control-file">
+                    </div>
+                    <input class="btn btn-primary" type="submit" value="Submit" style="margin:10px">
+
+                </div>
+            </form>
+
+        </div>
+
+    </div>
+</body>
+<script src="/js/jquery.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+
+</html>
