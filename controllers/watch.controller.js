@@ -1,5 +1,5 @@
-
 import WatchModel from '../models/watch.model';
+import { fileURLToPath } from 'url';
 
 const controller = {};
 
@@ -25,33 +25,49 @@ controller.getBrand = async (req, res) => {
         res.send('Got error in getAll');
     }
 }
-controller.saveWatch = async (req, res)=>{
+
+
+controller.addCar = async (req, res) => {
+    let carToAdd = Car({
+        name: req.body.name
+    });
     try {
-        let watchToSave = {
-            brand: req.brand, 
-            year: req. year,
-            condition: req.condition,
-            accessories: req.accessories,
-            model:{
-                nameModel: req.modelName,
-                condition: req.condition,
-                scopeDelivery: null,
-                price: req.price,
-            
-                description:null,
-                gender: req.gender,
-                movement:null,
-                caseMaterail: req.case_material,
-                braceletMaterail: req.bracelet_material,
-                caseDiameter: {
-                    mm: req.case_width,
-                    mm1: req.case_height
-                }
-    
-            }
-        }
+        const savedCar = await Car.addCar(carToAdd);
+        res.send('added: ' + savedCar);
     }
-    catch (err){
+    catch (err) {
+        res.send('Got error in getAll');
+    }
+}
+
+controller.saveWatch = async (req, res, image) => {
+    let watchToAdd = new WatchModel({
+        brand: req.body.brand,
+        year: req.body.year,
+        model: {
+            nameModel: req.body.modelName,
+            condition: req.body.condition,
+            condition: req.body.condition,
+            accessories: req.body.accessories,
+            scopeDelivery: null,
+            price: req.body.price,
+            description: null,
+            gender: req.body.gender,
+            movement: null,
+            caseMaterial: req.body.case_material,
+            braceletMaterial: req.body.bracelet_material,
+            caseSize: {
+                mm: req.body.case_width,
+                mm1: req.body.case_height
+            },
+            watchImage: image.path
+        },
+    })
+    try {
+        //console.log('adding the watch \n' + watchToAdd)
+        const savedWatch= await WatchModel.addWatch(watchToAdd);
+    }
+    catch (err) {
         console.log(err);
     }
 }

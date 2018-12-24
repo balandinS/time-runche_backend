@@ -1,25 +1,26 @@
 import mongoose from 'mongoose';
 
 const WatchSchema = mongoose.Schema({
-    _id: mongoose.Schema.Types.ObjectId,
+   // _id: mongoose.Schema.Types.ObjectId,
     brand: { type: String, required: true },
 
     model: {
         nameModel: { type: String, required: true },
-        referenceNumber: { type: Number, required: true },
+        referenceNumber: { type: Number},// required: true },
         condition: { type: String, required: true },
-        scopeOfDelivery: { type: String, required: true },
+        scopeOfDelivery: { type: String},// required: true },
         price: { type: Number, required: true },
-        allowPrice: { type: Boolean, required: true },
-        description: { type: String, required: true },
+        allowPrice: { type: Boolean},// required: true },
+        description: { type: String}, //required: true },
         gender: { type: String, required: true },
-        movement: { type: String, required: true },
-        caseMaterail: { type: String, required: true },
-        braceletMaterail: { type: String, required: true },
+        movement: { type: String}, //required: true },
+        caseMaterial: { type: String, required: true },
+        braceletMaterial: { type: String, required: true },
         caseSize: {
-            width: { type: Number, required: true },
-            height: { type: Number, required: true },
+            mm: { type: Number, required: true },
+            mm1: { type: Number, required: true },
         },
+        watchImage: { type: String, required: true }
     }
 });
 
@@ -40,7 +41,8 @@ WatchModel.watchSecondhand = () => {
     return WatchModel.find({ secondhand: true })
 }
 
-WatchModel.addWatch = (watchToAdd)=> {
+WatchModel.addWatch = (watchToAdd) => {
+    //console.log('adding a new watch brand ' + watchToAdd.brand)
     return watchToAdd.save();
 }
 
