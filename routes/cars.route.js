@@ -7,10 +7,11 @@ const router = express.Router();
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, "./images/")
+        cb(null, __dirname+ '/../images/')
     },
     filename: function (req, file, cb) {
-        cb(null, new Date().toISOString() + file.originalname);
+        cb(null, //new Date().toISOString()
+          file.originalname);
     }
 })
 const upload = multer({ storage: storage })
@@ -22,8 +23,8 @@ router.get('/addwatch', (req, res) => {
 })
 
 router.post('/addwatch', upload.single('imgUpload'), (req, res) => {
-    //console.log(req.body);
-    //console.log(req.file);
+   // console.log(req.body);
+   // console.log(req.file);
     watchController.saveWatch( req, res, req.file);
     res.render('../views/addwatch.html')
 })
