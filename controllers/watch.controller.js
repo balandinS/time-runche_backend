@@ -1,6 +1,6 @@
 import WatchModel from '../models/watch.model';
 import { fileURLToPath } from 'url';
-
+import jwt from 'jsonwebtoken';
 const controller = {};
 
 controller.getAll = async (req, res) => {
@@ -26,19 +26,39 @@ controller.getBrand = async (req, res) => {
     }
 }
 
+controller.login = (req, res)=>{
 
-controller.addCar = async (req, res) => {
-    let carToAdd = Car({
-        name: req.body.name
-    });
-    try {
-        const savedCar = await Car.addCar(carToAdd);
-        res.send('added: ' + savedCar);
+    const user = {
+        username: 'admin', 
+        password: '1234'
     }
-    catch (err) {
-        res.send('Got error in getAll');
+    jwt.sign({user: user}, 'secretkey', (err, token)=>{
+        if(err) console.log(err);
+        else{
+            res.json({
+                token: token
+            })
+        }
+    })
+}
+
+controller.extractToken =(req, res, next)=>{
+    const bearerHeader = req.headers['authorization'];
+    // console.log('the bearerheader is: '+ bearerHeader);
+    if(typeof bearerHeader!= 'undefined'){
+            const bearer = bearerHeader.split(' ');
+            const bearerToken= bearer[1];
+            req.token = bearerToken;
+            console.log('request token is: '+ req.token)
+            next(); 
+    }
+    else{
+        
+       res.status(300);
+       next();
     }
 }
+
 
 controller.saveWatch = async (req, res, image) => {
     let watchToAdd = new WatchModel({
@@ -71,6 +91,7 @@ controller.saveWatch = async (req, res, image) => {
         console.log(err);
     }
 }
+
 controller.getAccessories = async (req, res) => {
     try {
         console.log('LOG')

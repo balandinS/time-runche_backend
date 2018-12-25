@@ -1,31 +1,60 @@
 import express from "express";
 import watchController from "../controllers/watch.controller"
 import multer from 'multer'
+import jwt from 'jsonwebtoken';
+import controller from "../controllers/watch.controller";
+
 
 const nodemailer = require('nodemailer');
 const router = express.Router();
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, __dirname+ '/../images/')
+        cb(null, __dirname + '/../images/')
     },
     filename: function (req, file, cb) {
         cb(null, //new Date().toISOString()
-          file.originalname);
+            file.originalname);
     }
 })
 const upload = multer({ storage: storage })
 
 
 
-router.get('/addwatch', (req, res) => {
-    res.render('../views/addwatch');
+router.get('/addwatch', controller.extractToken, (req, res) => {
+   // console.log('the res status is '+ res.statusCode)
+    jwt.verify(req.token, 'secretkey', (err, authData) => {
+        if (err) {
+           // console.log('Unauthorized')
+            res.redirect('/login.html');
+        }
+        else {
+            console.log('logged in. You can add the watch')
+            console.log(authData)
+            res.render('../views/addwatch');
+
+        }
+    })
+
 })
 
+
+
+
+router.get('/login', (req, res) => {
+    res.render('../views/login.html')
+})
+
+router.post('/login',(req, res) => {
+    watchController.login(req, res);
+})
+
+
+
 router.post('/addwatch', upload.single('imgUpload'), (req, res) => {
-   // console.log(req.body);
-   // console.log(req.file);
-    watchController.saveWatch( req, res, req.file);
+    // console.log(req.body);
+    // console.log(req.file);
+    watchController.saveWatch(req, res, req.file);
     res.render('../views/addwatch.html')
 })
 
