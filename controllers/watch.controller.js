@@ -26,36 +26,47 @@ controller.getBrand = async (req, res) => {
     }
 }
 
-controller.login = (req, res)=>{
+controller.login = (req, res, cb) => {
 
+    console.log('username ' + req.body.username)
+    console.log('password ' + req.body.password)
+    
+    //TODO user sign in
     const user = {
-        username: 'admin', 
+        username: 'admin',
         password: '1234'
     }
-    jwt.sign({user: user}, 'secretkey', (err, token)=>{
-        if(err) console.log(err);
-        else{
-            res.json({
-                token: token
-            })
-        }
-    })
-}
-
-controller.extractToken =(req, res, next)=>{
-    const bearerHeader = req.headers['authorization'];
-    // console.log('the bearerheader is: '+ bearerHeader);
-    if(typeof bearerHeader!= 'undefined'){
-            const bearer = bearerHeader.split(' ');
-            const bearerToken= bearer[1];
-            req.token = bearerToken;
-            console.log('request token is: '+ req.token)
-            next(); 
+    if(user.username===req.body.username && user.password===req.body.password){
+        jwt.sign({ user: user }, 'secretkey', (err, token) => {
+            if (err) console.log(err);
+            else {
+                res.status(200);
+                cb(res);
+            }
+        })
     }
     else{
-        
-       res.status(300);
-       next();
+        console.log('wrong username or password');
+         res.status(300);
+         cb(res);
+    }
+    
+}
+
+controller.extractToken = (req, res, next) => {
+    const bearerHeader = req.headers['authorization'];
+    // console.log('the bearerheader is: '+ bearerHeader);
+    if (typeof bearerHeader != 'undefined') {
+        const bearer = bearerHeader.split(' ');
+        const bearerToken = bearer[1];
+        req.token = bearerToken;
+        console.log('request token is: ' + req.token)
+        next();
+    }
+    else {
+        console.log('***********redirecting*****************')
+        res.status(300);
+        next();
     }
 }
 
@@ -85,7 +96,7 @@ controller.saveWatch = async (req, res, image) => {
     })
     try {
         //console.log('adding the watch \n' + watchToAdd)
-        const savedWatch= await WatchModel.addWatch(watchToAdd);
+        const savedWatch = await WatchModel.addWatch(watchToAdd);
     }
     catch (err) {
         console.log(err);

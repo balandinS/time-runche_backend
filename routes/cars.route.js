@@ -22,17 +22,18 @@ const upload = multer({ storage: storage })
 
 
 router.get('/addwatch', controller.extractToken, (req, res) => {
-   // console.log('the res status is '+ res.statusCode)
+    console.log('the res status is ' + res.statusCode)
+
     jwt.verify(req.token, 'secretkey', (err, authData) => {
         if (err) {
-           // console.log('Unauthorized')
-            res.redirect('/login.html');
+            //console.log('Unauthorized')
+            res.render('../views/login');
         }
         else {
             console.log('logged in. You can add the watch')
             console.log(authData)
+            console.log("================================================")
             res.render('../views/addwatch');
-
         }
     })
 
@@ -45,10 +46,17 @@ router.get('/login', (req, res) => {
     res.render('../views/login.html')
 })
 
-router.post('/login',(req, res) => {
-    watchController.login(req, res);
+router.post('/login', (req, res) => {
+    watchController.login(req, res, (res) => {
+        if (res.statusCode === 300) {
+            res.render('../views/login.html')
+        }
+        else if (res.statusCode === 200) {
+            console.log('rendering ADDWATCH')
+            res.render('../views/addwatch.html');
+        }
+    });
 })
-
 
 
 router.post('/addwatch', upload.single('imgUpload'), (req, res) => {
