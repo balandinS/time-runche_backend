@@ -30,9 +30,7 @@ router.get('/addwatch', controller.extractToken, (req, res) => {
             res.render('../views/login');
         }
         else {
-            console.log('logged in. You can add the watch')
-            console.log(authData)
-            console.log("================================================")
+            //console.log(authData)
             res.render('../views/addwatch');
         }
     })
@@ -52,7 +50,6 @@ router.post('/login', (req, res) => {
             res.render('../views/login.html')
         }
         else if (res.statusCode === 200) {
-            console.log('rendering ADDWATCH')
             res.render('../views/addwatch.html');
         }
     });
@@ -77,7 +74,7 @@ router.get('/watches', (req, res) => {
 });
 
 router.get('/watches/:brand', (req, res) => {
-    console.log(req.params.brand)
+    //console.log(req.params.brand)
     watchController.getBrand(req, res)
         .then(doc => {
             res.status(200).json(doc)
@@ -139,5 +136,8 @@ router.post('/send', (req, res) => {
     });
 });
 
+router.get('/search', (req, res)=>{
+    res.render('../views/search.html');
+})
 
 export default router;

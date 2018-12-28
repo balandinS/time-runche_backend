@@ -1,0 +1,17 @@
+<html>
+<head>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+</head>
+
+<body>
+    <form method="GET">
+        <input id='search_box' type='text' placeholder="Watches">
+        <input class="btn btn-primary" type="submit" value="Search"  onclick="form.action='/watches/'+document.getElementById('search_box').value">
+
+    </form>
+</body>
+
+<script src="/js/jquery.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+
+</html>
